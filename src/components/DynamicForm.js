@@ -23,41 +23,46 @@ function DynamicForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(fields);
-    // You can perform further actions like sending the data to a server here
+
+    document.dispatchEvent(new Event('formSubmitted'));
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {fields.map((field, index) => (
-        <div key={index}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={field.name}
-              onChange={(e) => handleChange(index, e)}
-            />
-          </label>
-          <label>
-            Age:
-            <input
-              type="number"
-              name="age"
-              value={field.age}
-              onChange={(e) => handleChange(index, e)}
-            />
-          </label>
-          <button type="button" onClick={() => handleRemoveField(index)}>
-            Remove
-          </button>
-        </div>
-      ))}
-      <button type="button" onClick={handleAddField}>
-        Add More..
-      </button>
-      <button type="submit">Submit</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        {fields.map((field, index) => (
+          <div key={index}>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={field.name}
+                onChange={(e) => handleChange(index, e)}
+              />
+            </label>
+            <label>
+              Age:
+              <input
+                type="number"
+                name="age"
+                value={field.age}
+                onChange={(e) => handleChange(index, e)}
+              />
+            </label>
+            <button type="button" onClick={() => handleRemoveField(index)}>
+              Remove
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={handleAddField}>
+          Add More..
+        </button>
+        <button type="submit" className="submit-button">
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
 
