@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './app.css'
+
 function DynamicForm() {
   const [fields, setFields] = useState([{ name: '', age: '' }]);
 
@@ -13,11 +13,11 @@ function DynamicForm() {
     setFields(updatedFields);
   };
 
-  const handleChange = (index) => (e) => {
-    const { name, value } = e.target;
+  const handleChange = (index, name) => (e) => {
+    const value = e.target.value;
     setFields((prevFields) => {
       const updatedFields = [...prevFields];
-      updatedFields[index] = { ...updatedFields[index], [name]: value };
+      updatedFields[index][name] = value;
       return updatedFields;
     });
   };
@@ -34,21 +34,11 @@ function DynamicForm() {
           <div key={index}>
             <label>
               Name:
-              <input
-                type="text"
-                name="name"
-                value={field.name}
-                onChange={(e) => handleChange(index)(e)}
-              />
+              <input type="text" name="name" value={field.name} onChange={(e) => handleChange(index, 'name')(e)}/>
             </label>
             <label>
               Age:
-              <input
-                type="number"
-                name="age"
-                value={field.age}
-                onChange={(e) => handleChange(index)(e)}
-              />
+              <input type="number" name="age" value={field.age} onChange={(e) => handleChange(index, 'age')(e)}/>
             </label>
             <button type="button" onClick={() => handleRemoveField(index)}>
               Remove
