@@ -1,39 +1,42 @@
 import React, { useState } from 'react';
 
-const DynamicForm = () => {
-  const [fields, setFields] = useState([
-    { id: 1, name: '', age: '' },
-  ]);
+function DynamicForm() {
+  const [fields, setFields] = useState([{ name: '', age: '' }]);
 
   const handleAddField = () => {
-    setFields([...fields, { id: fields.length + 1, name: '', age: '' }]);
+    setFields([...fields, { name: '', age: '' }]);
   };
 
-  const handleRemoveField = (id) => {
-    setFields(fields.filter((field) => field.id !== id));
+  const handleRemoveField = (index) => {
+    const updatedFields = [...fields];
+    updatedFields.splice(index, 1);
+    setFields(updatedFields);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleChange = (index, e) => {
+    const { name, value } = e.target;
+    const updatedFields = [...fields];
+    updatedFields[index][name] = value;
+    setFields(updatedFields);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log(fields);
-  };
-
-  const handleInputChange = (id, field,event) => {
-    const newFields = fields.map((f) => (f.id === id ? { ...f, [field]: event.target.value } : f));
-    setFields(newFields);
+    // You can perform further actions like sending the data to a server here
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {fields.map((field) => (
-        <div key={field.id}>
+      {fields.map((field, index) => (
+        <div key={index}>
           <label>
             Name:
             <input
               type="text"
               name="name"
               value={field.name}
-              onChange={(event) => handleInputChange(field.id, 'name',event)}
+              onChange={(e) => handleChange(index, e)}
             />
           </label>
           <label>
@@ -42,19 +45,20 @@ const DynamicForm = () => {
               type="number"
               name="age"
               value={field.age}
-              onChange={(event) => handleInputChange(field.id, 'age',event)}
+              onChange={(e) => handleChange(index, e)}
             />
           </label>
-          <button type="button" onClick={() => handleRemoveField(field.id)}>
+          <button type="button" onClick={() => handleRemoveField(index)}>
             Remove
           </button>
         </div>
       ))}
       <button type="button" onClick={handleAddField}>
-      Add More..
+        Add More..
       </button>
       <button type="submit">Submit</button>
     </form>
   );
-};
+}
+
 export default DynamicForm;
