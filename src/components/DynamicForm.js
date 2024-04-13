@@ -15,10 +15,13 @@ function DynamicForm() {
 
   const handleChange = (index) => (e) => {
     const { name, value } = e.target;
-    const updatedFields = [...fields];
-    updatedFields[index] = { ...updatedFields[index], [name]: value };
-    setFields(updatedFields);
+    setFields((prevFields) => {
+      const updatedFields = [...prevFields];
+      updatedFields[index] = { ...updatedFields[index], [name]: value };
+      return updatedFields;
+    });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(fields);
@@ -35,7 +38,7 @@ function DynamicForm() {
                 type="text"
                 name="name"
                 value={field.name}
-                onChange={(e) => handleChange(index, e)}
+                onChange={(e) => handleChange(index)(e)}
               />
             </label>
             <label>
@@ -44,7 +47,7 @@ function DynamicForm() {
                 type="number"
                 name="age"
                 value={field.age}
-                onChange={(e) => handleChange(index, e)}
+                onChange={(e) => handleChange(index)(e)}
               />
             </label>
             <button type="button" onClick={() => handleRemoveField(index)}>
