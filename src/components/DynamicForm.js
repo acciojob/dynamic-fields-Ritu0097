@@ -33,7 +33,7 @@ const DynamicForm = () => {
               type="text"
               name="name"
               value={field.name}
-              onChange={(event) => handleInputChange(field.id, 'name')}
+              onChange={(event) => handleInputChange(field.id, 'name',event)}
             />
           </label>
           <label>
@@ -42,7 +42,7 @@ const DynamicForm = () => {
               type="number"
               name="age"
               value={field.age}
-              onChange={(event) => handleInputChange(field.id, 'age')}
+              onChange={(event) => handleInputChange(field.id, 'age',event)}
             />
           </label>
           <button type="button" onClick={() => handleRemoveField(field.id)}>
