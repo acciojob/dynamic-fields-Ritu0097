@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './App.css'
 function DynamicForm() {
   const [fields, setFields] = useState([{ name: '', age: '' }]);
 
