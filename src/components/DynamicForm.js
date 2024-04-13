@@ -13,18 +13,15 @@ function DynamicForm() {
     setFields(updatedFields);
   };
 
-  const handleChange = (index, e) => {
+  const handleChange = (index) => (e) => {
     const { name, value } = e.target;
     const updatedFields = [...fields];
-    updatedFields[index][name] = value;
+    updatedFields[index] = { ...updatedFields[index], [name]: value };
     setFields(updatedFields);
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(fields);
-
-    document.dispatchEvent(new Event('formSubmitted'));
   };
 
   return (
