@@ -34,11 +34,11 @@ function DynamicForm() {
           <div key={index}>
             <label>
               Name:
-              <input type="text" name="name" value={field.name} onChange={(e) => handleChange(index, 'name')(e)}/>
+              <input type="text" name="name" value={field.name} onChange={handleChange(index, 'name')} />
             </label>
             <label>
               Age:
-              <input type="number" name="age" value={field.age} onChange={(e) => handleChange(index, 'age')(e)}/>
+              <input type="number" name="age" value={field.age} onChange={handleChange(index, 'age')} />
             </label>
             <button type="button" onClick={() => handleRemoveField(index)}>
               Remove
