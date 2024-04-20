@@ -5,14 +5,14 @@ function App() {
     {
       id: 1,
       name: "",
-      email: ""
+      age: ""
     }
   ]);
 
   const handleNewField = () => {
     setContacts(prevContacts => [
       ...prevContacts,
-      { id: prevContacts.length + 1, name: "", email: "" }
+      { id: prevContacts.length + 1, name: "", age: "" }
     ]);
   };
 
@@ -47,15 +47,15 @@ function App() {
               value={contact.name}
               onChange={e => handleInputChange(contact.id, "name", e.target.value)}
             />
-            <label>Email</label>
+            <label>Age</label>
             <input
-              type="email"
-              name="email"
-              value={contact.email}
-              onChange={e => handleInputChange(contact.id, "email", e.target.value)}
+              type="text"
+              name="age"
+              value={contact.age}
+              onChange={e => handleInputChange(contact.id, "age", e.target.value)}
             />
             <button type="button" onClick={() => handleRemoveField(contact.id)}>
-              Delete
+              Remove
             </button>
           </div>
         ))}
