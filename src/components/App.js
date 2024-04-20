@@ -10,7 +10,7 @@ const App = () => {
 	}
 
 	const addField = () => {
-		setFields([...fields, { name: '', age: '' }])
+		setFields(...fields, { name: '', age: '' })
 	}
 
 	const removeField = (index) => {
@@ -21,7 +21,7 @@ const App = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
-		console.log('Form Data:', fields)
+		console.log(fields)
 	}
 
 	return (
