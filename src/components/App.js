@@ -1,71 +1,64 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-function App() {
-  const [contacts, setContacts] = useState([
-    {
-      id: 1,
-      name: "",
-      age: ""
-    }
-  ]);
+const App = () => {
+	const [fields, setFields] = useState([{ name: '', age: '' }])
 
-  const handleNewField = () => {
-    setContacts(prevContacts => [
-      ...prevContacts,
-      { id: prevContacts.length + 1, name: "", age: "" }
-    ]);
-  };
+	const handleFieldChange = (index, event) => {
+		const values = [...fields]
+		values[index][event.target.name] = event.target.value
+		setFields(values)
+	}
 
-  const handleRemoveField = id => {
-    setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== id)
-    );
-  };
+	const addField = () => {
+		setFields([...fields, { name: '', age: '' }])
+	}
 
-  const handleInputChange = (id, field, value) => {
-    setContacts(prevContacts =>
-      prevContacts.map(contact =>
-        contact.id === id ? { ...contact, [field]: value } : contact
-      )
-    );
-  };
+	const removeField = (index) => {
+		const values = [...fields]
+		values.splice(index, 1)
+		setFields(values)
+	}
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(contacts);
-  };
+	const handleSubmit = (event) => {
+		event.preventDefault()
+		console.log('Form Data:', fields)
+	}
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        {contacts.map(contact => (
-          <div key={contact.id}>
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={contact.name}
-              onChange={e => handleInputChange(contact.id, "name", e.target.value)}
-            />
-            <label>Age</label>
-            <input
-              type="text"
-              name="age"
-              value={contact.age}
-              onChange={e => handleInputChange(contact.id, "age", e.target.value)}
-            />
-            <button type="button" onClick={() => handleRemoveField(contact.id)}>
-              Remove
-            </button>
-          </div>
-        ))}
-        <button type="submit">Submit</button>
-        <button type="button" onClick={handleNewField}>
-          Add More..
-        </button>
-      </form>
-    </div>
-  );
+	return (
+		<form onSubmit={handleSubmit}>
+			{fields.map((field, index) => (
+				<div key={index} className="field">
+					<label htmlFor={`name-${index}`}></label>
+					<input
+						type="text"
+						id={`name-${index}`}
+						name="name"
+						value={field.name}
+						onChange={(event) => handleFieldChange(index, event)}
+						placeholder="Name"
+						required
+					/>
+					<label htmlFor={`age-${index}`}></label>
+					<input
+						type="number"
+						id={`age-${index}`}
+						name="age"
+						value={field.age}
+						onChange={(event) => handleFieldChange(index, event)}
+						placeholder="Age"
+						required
+					/>
+					<button type="button" onClick={() => removeField(index)}>
+						Remove
+					</button>
+				</div>
+			))}
+			<button type="button" onClick={addField}>
+				Add Field
+			</button>
+			<button type="submit">Submit</button>
+		</form>
+	)
 }
 
-export default App;
+export default App
