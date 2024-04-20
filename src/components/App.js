@@ -1,46 +1,59 @@
-import React from "react";
-import { v4 as uuid } from "uuid";
-import { useFormik } from "formik";
+import React, { useState } from "react";
 
 function App() {
-  const formik = useFormik({
-    initialValues: {
-      contacts: [
-        {
-          id: uuid(),
-          name: "",
-          email: ""
-        }
-      ]
-    },
-    onSubmit: values => {
-      console.log(values);
+  const [contacts, setContacts] = useState([
+    {
+      id: 1,
+      name: "",
+      email: ""
     }
-  });
+  ]);
 
   const handleNewField = () => {
-    formik.setFieldValue("contacts", [
-      ...formik.values.contacts,
-      { id: uuid(), name: "", email: "" }
+    setContacts(prevContacts => [
+      ...prevContacts,
+      { id: prevContacts.length + 1, name: "", email: "" }
     ]);
   };
 
   const handleRemoveField = id => {
-    formik.setFieldValue(
-      "contacts",
-      formik.values.contacts.filter(contact => contact.id !== id)
+    setContacts(prevContacts =>
+      prevContacts.filter(contact => contact.id !== id)
     );
+  };
+
+  const handleInputChange = (id, field, value) => {
+    setContacts(prevContacts =>
+      prevContacts.map(contact =>
+        contact.id === id ? { ...contact, [field]: value } : contact
+      )
+    );
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(contacts);
   };
 
   return (
     <div>
-      <form onSubmit={formik.handleSubmit}>
-        {formik.values.contacts.map((contact, index) => (
+      <form onSubmit={handleSubmit}>
+        {contacts.map(contact => (
           <div key={contact.id}>
             <label>Name</label>
-            <input {...formik.getFieldProps(`contacts[${index}].name`)} />
+            <input
+              type="text"
+              name="name"
+              value={contact.name}
+              onChange={e => handleInputChange(contact.id, "name", e.target.value)}
+            />
             <label>Email</label>
-            <input {...formik.getFieldProps(`contacts[${index}].email`)} />
+            <input
+              type="email"
+              name="email"
+              value={contact.email}
+              onChange={e => handleInputChange(contact.id, "email", e.target.value)}
+            />
             <button type="button" onClick={() => handleRemoveField(contact.id)}>
               Delete
             </button>
@@ -48,7 +61,7 @@ function App() {
         ))}
         <button type="submit">Submit</button>
         <button type="button" onClick={handleNewField}>
-          Add Field
+          Add More..
         </button>
       </form>
     </div>
