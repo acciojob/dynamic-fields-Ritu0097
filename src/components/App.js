@@ -10,7 +10,7 @@ const App = () => {
 	}
 
 	const addField = () => {
-		setFields(...fields, { name: '', age: '' })
+		setFields([...fields, { name: '', age: '' }])
 	}
 
 	const removeField = (index) => {
